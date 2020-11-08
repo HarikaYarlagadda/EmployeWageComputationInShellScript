@@ -5,10 +5,10 @@ maxHrsInMonth=10
 empRatePerHr=20
 numWorkingDays=20
 
-totalEmpHrs=0
+totalEnpHrs=0
 totalWorkingDays=0
 
-function getWorkingHours(){
+function getWorkingHours() {
 	case $1 in
 		$isPartTime)
 			empHrs=4
@@ -22,10 +22,18 @@ function getWorkingHours(){
 	esac
 	echo $empHrs
 }
+function calDailyWages() {
+	totalWorkHrs=$1;
+	wages=$(( $totalWorkHrs*$empRatePerHr ))
+	echo $wages;
+}
 while [[ $totalEmpHrs -lt $maxHrsInMonth && $totalWorkingDays -lt $numWorkingDays ]]
 do
 	totalWorkingDays=$(($totalWorkingDays+1))
-	empHrs="$(getWorkingHours $(( RANDOM%3 )) )"
-	totalEmpHrs=$(($totalEmpHrs+$empHrs))
-	totalSalary=$(($totalSalary+($totalEmpHrs*$empRatePerHr)))
+	empHrs="$( getWorkingHrs $((RANDOM%3)) )"
+	totalEmpHrs=$(( $totalEmpHrs+$empHrs ))
+	empDailyWages[$totalWorkingDays]="$(calDailyWages$empHrs)"
 done
+totalSalary="$(calDailyWages*$totalEmpHrs)"
+echo "daily wages :"
+    ${empDailyWages[@]}
