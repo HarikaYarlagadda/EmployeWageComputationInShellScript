@@ -1,10 +1,14 @@
 #! /bin/bash
-echo "welcome to employe wage computation program "
-empattendance=$(( RANDOM%2 ))
-if [ $empattendance -eq 0 ]
+isPresent=1;
+randomCheck=$(( RANDOM%2 ));
+
+if [ $isPresent -eq $randomCheck ];
 then
-        echo "employee is absent"
+   empRatePerHr=20;
+	empHrs=8;
+	salary=$(($empHrs*$empRatePerHr));
 else
-        echo "employe is present"
+	salary=0;
 fi
+echo $salary
 
